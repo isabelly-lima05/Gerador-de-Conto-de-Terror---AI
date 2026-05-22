@@ -47,21 +47,21 @@ def generate_horror_stream(cenario, tipo_medo, estilo_escrita):
         
         for chunk in response_stream:
             if chunk.text:
-                # Formatação padrão do protocolo Server-Sent Events (SSE)
                 yield f"data: {chunk.text}\n\n"
                 
     except APIError as e:
-        # Envia uma resposta JSON de erro estruturada dentro do stream caso a API falhe (ex: erro 503)
+        # Erro temático para falhas de comunicação com a API (ex: erro 503)
         error_payload = json.dumps({
             "status": "error",
-            "message": f"Erro de comunicação com o provedor de IA (Código {e.code}). Tente novamente em breve."
+            "message": "Ruído no Éter: O repositório central de ideias está sob alta demanda ou temporariamente indisponível. O silêncio responde por agora. Tente invocar a prosa novamente em instantes."
         })
         yield f"data: {error_payload}\n\n"
         
     except Exception as e:
+        # Erro genérico para anomalias inesperadas
         error_payload = json.dumps({
             "status": "error",
-            "message": f"Erro inesperado durante a transmissão: {str(e)}"
+            "message": "Anomalia Narrativa: Uma interferência desconhecida corrompeu o fluxo da escrita. Verifique as configurações de rede e tente projetar a prosa novamente."
         })
         yield f"data: {error_payload}\n\n"
 
@@ -70,7 +70,7 @@ def root():
     return jsonify({
         "status": "success",
         "message": "API Gerador de Contos de Terror Ativa!",
-        "version": "1.0",
+        "version": "1.1",
         "author": "Isabelly"
     }), 200
 
@@ -88,19 +88,18 @@ def generate():
     if not cenario or not tipo_medo or not estilo_escrita:
         return jsonify({
             "status": "error", 
-            "message": "Preencha todos os campos obrigatórios: cenario, tipo_medo, estilo_escrita."
+            "message": "Parâmetros incompletos. Forneça o cenário, tipo de medo e estilo de escrita para iniciar."
         }), 400
     
-    # Camada de Proteção Local
+    # Camada de Proteção Local (Filtro Temático)
     texto_combinado = f"{cenario} {tipo_medo} {estilo_escrita}".lower()
     if any(palavra in texto_combinado for palavra in PALAVRAS_PROIBIDAS):
         return jsonify({
             "status": "error",
-            "message": "Sua solicitação contém termos restritos por nossas políticas de segurança."
+            "message": "Sinal Interrompido: A frequência de ideias sugeridas ultrapassa as barreiras de nossa moderação de segurança. O terror psicológico evoca o mistério e a paranoia, evitando a violência física explícita."
         }), 400
             
     try:
-        # O uso de stream_with_context garante o gerenciamento de recursos do Flask durante o SSE
         return Response(
             stream_with_context(generate_horror_stream(cenario, tipo_medo, estilo_escrita)),
             mimetype='text/event-stream',
@@ -114,7 +113,7 @@ def generate():
     except Exception as e:
         return jsonify({
             "status": "error",
-            "message": f"Não foi possível iniciar o serviço de geração: {str(e)}"
+            "message": f"Não foi possível iniciar o serviço de geração de texto: {str(e)}"
         }), 500
 
 if __name__ == "__main__":
