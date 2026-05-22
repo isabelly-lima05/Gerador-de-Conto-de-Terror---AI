@@ -73,8 +73,17 @@ def root():
         "author": "Isabelly"
     }), 200
 
-@app.route("/generate", methods=["POST"])
+@app.route("/generate", methods=["POST", "OPTIONS"])
 def generate():
+    # Tratamento manual de requisição de pré-teste (Preflight CORS) para a Vercel
+    if request.method == "OPTIONS":
+        response = Response()
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        response.headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization")
+        response.headers.add("Access-Control-Allow-Methods", "POST,OPTIONS")
+        return response
+
+    # Processamento normal do POST
     data = request.get_json()
     
     if not data:
@@ -99,13 +108,15 @@ def generate():
         }), 400
             
     try:
+        # Retorna a transmissão SSE com cabeçalhos CORS explícitos
         return Response(
             stream_with_context(generate_horror_stream(cenario, tipo_medo, estilo_escrita)),
             mimetype='text/event-stream',
             headers={
                 'Cache-Control': 'no-cache',
                 'Transfer-Encoding': 'chunked',
-                'Connection': 'keep-alive'
+                'Connection': 'keep-alive',
+                'Access-Control-Allow-Origin': '*'
             }
         )
         
