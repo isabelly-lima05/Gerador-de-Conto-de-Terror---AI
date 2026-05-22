@@ -50,19 +50,18 @@ def generate_horror_stream(cenario, tipo_medo, estilo_escrita):
                 yield f"data: {chunk.text}\n\n"
                 
     except APIError as e:
-        # Erro temático para falhas de comunicação com a API (ex: erro 503)
+        # ensure_ascii=False garante a codificação correta de acentos em UTF-8 no stream
         error_payload = json.dumps({
             "status": "error",
             "message": "Ruído no Éter: O repositório central de ideias está sob alta demanda ou temporariamente indisponível. O silêncio responde por agora. Tente invocar a prosa novamente em instantes."
-        })
+        }, ensure_ascii=False)
         yield f"data: {error_payload}\n\n"
         
     except Exception as e:
-        # Erro genérico para anomalias inesperadas
         error_payload = json.dumps({
             "status": "error",
             "message": "Anomalia Narrativa: Uma interferência desconhecida corrompeu o fluxo da escrita. Verifique as configurações de rede e tente projetar a prosa novamente."
-        })
+        }, ensure_ascii=False)
         yield f"data: {error_payload}\n\n"
 
 @app.route("/")
@@ -91,7 +90,7 @@ def generate():
             "message": "Parâmetros incompletos. Forneça o cenário, tipo de medo e estilo de escrita para iniciar."
         }), 400
     
-    # Camada de Proteção Local (Filtro Temático)
+    # Camada de Proteção Local
     texto_combinado = f"{cenario} {tipo_medo} {estilo_escrita}".lower()
     if any(palavra in texto_combinado for palavra in PALAVRAS_PROIBIDAS):
         return jsonify({
