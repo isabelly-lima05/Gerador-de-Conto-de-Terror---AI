@@ -69,7 +69,7 @@ def generate():
     try:
         # Chamada direta com configurações de segurança permissivas para escrita criativa
         response = client.models.generate_content(
-            model="gemini-2.5-flash",
+            model="gemini-3-flash-preview",
             contents=conteudo_prompt,
             config=types.GenerateContentConfig(
                 system_instruction=SYSTEM_INSTRUCTION,
