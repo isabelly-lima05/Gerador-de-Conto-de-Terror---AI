@@ -30,7 +30,7 @@ def root():
     return jsonify({
         "status": "success",
         "message": "API Gerador de Contos de Terror Ativa!",
-        "version": "1.3",
+        "version": "1.4",
         "author": "Isabelly"
     }), 200
 
