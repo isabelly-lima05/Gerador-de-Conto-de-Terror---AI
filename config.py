@@ -23,6 +23,10 @@ DOSSIE_SCHEMA = {
             "type": "STRING",
             "description": "Data e local de nascimento, filiação, local de falecimento (se aplicável) e dados demográficos essenciais."
         },
+        "resumo_caso": {
+            "type": "STRING",
+            "description": "Um resumo jornalístico e factual de alto nível sobre o caso e a notoriedade do indivíduo."
+        },
         "infancia_desenvolvimento": {
             "type": "STRING",
             "description": "Histórico detalhado da infância, ambiente familiar, criação, comportamento na escola, traumas documentados e fatores psicossociais de desenvolvimento."
@@ -59,6 +63,10 @@ DOSSIE_SCHEMA = {
             "type": "STRING",
             "description": "Identificação exata do regime penitenciário atual (Regime Fechado, Semiaberto, Aberto, Liberdade Condicional, Regime Disciplinar Diferenciado - RDD, Falecido, Executado ou Solto por cumprimento de pena)."
         },
+        "anos_condenacao": {
+            "type": "STRING",
+            "description": "A dosimetria total da pena imposta ou somada ao longo das condenações históricas."
+        },
         "situacao_atual_hoje": {
             "type": "STRING",
             "description": "O paradeiro exato do indivíduo no presente momento. Idade atual, saúde física/mental, unidade prisional em que se encontra, atividades que desempenha ou, caso falecido, circunstâncias biológicas, local e data exata do óbito."
@@ -74,6 +82,7 @@ DOSSIE_SCHEMA = {
         "nome_completo",
         "alcunhas_pseudonimos",
         "dados_biograficos_basicos",
+        "resumo_caso",
         "infancia_desenvolvimento",
         "antecedentes_primeiros_delitos",
         "cronologia_crimes_principais",
@@ -83,6 +92,7 @@ DOSSIE_SCHEMA = {
         "processo_julgamento_sentenca",
         "vida_carceraria_comportamento",
         "regime_penal_atual",
+        "anos_condenacao",
         "situacao_atual_hoje",
         "impacto_social_legado"
     ]
@@ -94,6 +104,6 @@ Você é um terminal analítico forense de alta precisão. Sua função é monta
 REQUISITOS DE PREENCHIMENTO E CONTEÚDO:
 1. EXAUSTIVIDADE DOS DADOS: Cada campo do schema de resposta deve ser preenchido com descrições detalhadas, completas e profundas. Evite resumos rasos. Apresente datas, locais, termos técnicos e o contexto histórico completo.
 2. NEUTRALIDADE E LINGUAGEM TÉCNICA: Mantenha um estilo de redação estritamente enciclopédico, jurídico e forense. Evite termos de julgamento moral, sensacionalismo ou espetacularização. Trate as informações com distanciamento científico.
-3. CONFIABILIDADE HISTÓRICA: Baseie os dados em fatos públicos comprovados por processos judiciais oficiais e matérias jornalísticas de ampla circulação. Caso existam teorias divergentes ou mistérios não solucionados (ex: identidade de Jack o Estripador), apresente-os de forma neutra como hipóteses de investigação.
+3. CONFIABILIDADE HISTÓRICA: Baseie os dados em fatos públicos comprovados por processos judiciais oficiais e matérias jornalísticas de ampla circulação.
 4. CONTROLE DE PRIVACIDADE: Caso a busca envolva pessoas sem relevância pública criminal ou nomes de civis privados, retorne 'pesquisa_valida' como FALSE para preservar a conformidade e ética de dados.
 """

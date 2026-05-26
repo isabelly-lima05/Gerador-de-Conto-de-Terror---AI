@@ -54,7 +54,7 @@ def generate():
                 system_instruction=SYSTEM_INSTRUCTION,
                 response_mime_type="application/json",
                 response_schema=DOSSIE_SCHEMA,
-                temperature=0.15 # Temperatura baixa para mitigar alucinações e focar em dados históricos estáveis
+                temperature=0.15
             )
         )
         
